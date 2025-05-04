@@ -355,7 +355,7 @@ body {
     top: 0;
     left: 0;
     z-index: 13;
-    width: 75px
+    width: 75px;
 }
 
 .s-type:hover {
@@ -388,7 +388,7 @@ body {
     width: 0;
     height: 0;
     border: 10px solid transparent;
-    border-bottom-color: #fff
+    border-bottom-color: #fff;
 }
 
 .s-type-list label {
@@ -428,6 +428,7 @@ body {
     padding-left: 18px;
     font-size: 1.45rem;
     line-height: 31px;
+    color: #C1FFC1;
 }
 
 .type-text:after {
@@ -438,11 +439,11 @@ body {
 
 .search-type {
     white-space: nowrap;
-    margin: 0
+    margin: 0;
 }
 
 .search-type label {
-    margin: 0
+    margin: 0;
 }
 
 .search-type li {
