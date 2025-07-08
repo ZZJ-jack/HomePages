@@ -20,18 +20,29 @@
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <script src="https://cdn.staticfile.org/jquery/3.6.0/jquery.min.js"></script>
     <style>
-        /* 新增矩阵背景样式 */
-        body {background: #000 !important; font-family: 'Courier New', monospace !important;}
-        #matrix {position: fixed; z-index: -1; top:0; left:0}
-        .scanline {position: fixed; width:100%; height:2px; background: rgba(0,255,0,0.3); animation: scan 4s linear infinite;}
-        @keyframes scan {0% {top:-2px;} 100% {top:100%;}}
-        .blink {animation: blink 1s step-end infinite;}
-        @keyframes blink {50% {opacity: 0;}}
-
-        /* 覆盖原有颜色 */
-        .text-gray, .xe-user-name, .overflowClip_2 {color: #0f0 !important; text-shadow: 0 0 5px #0f0;}
-        .xe-widget {background: rgba(0,20,0,0.7) !important; border: 2px solid #0f0 !important;}
-        .main-footer {background: rgba(0,20,0,0.7) !important; border-top: 2px solid #0f0;}
+        body {
+        background: transparent !important;
+    }
+    #video-matrix-bg {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        z-index: -2;
+        opacity: 0.7;
+    }
+    .code-particles {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        z-index: -1;
+        pointer-events: none;
+    }
+    @keyframes float {
+        0% { transform: translateY(0) translateX(0); opacity: 0; }
+        10% { opacity: 0.9; }
+        90% { opacity: 0.9; }
+        100% { transform: translateY(-100vh) translateX(20px); opacity: 0; }
+    }
     </style>
     <script>
         var userDefinedSearchData = {};
@@ -55,9 +66,16 @@
     </script>
 </head>
 <body class="page-body">
-    <canvas id="matrix"></canvas>
-    <div class="scanline"></div>
-    
+    <!-- === 新增代码开始 === -->
+    <!-- 视频背景容器 -->
+    <div id="video-matrix-bg">
+        <div class="banner-container">
+            <video id="bg-video" autoplay loop muted playsinline>
+                <source src="images/backgroud.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
+
     <div class="page-container">
         <!--顶侧部栏LOGO标题及菜单-->
         <div class="sidebar-menu toggle-others fixed collapsed">
@@ -655,31 +673,6 @@
     <script src="./js/xenon-toggles.min.js"></script>
     <script src="./js/xenon-custom.min.js"></script>
     <script src="./js/lozad.min.js"></script>
-    <!-- 新增矩阵动画脚本 -->
-    <script>
-        const canvas = document.getElementById('matrix');
-        const ctx = canvas.getContext('2d');
-        function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        resize();
-        window.addEventListener('resize', resize);
-        const chars = '01';
-        const drops = Array(Math.floor(canvas.width/20)).fill(0);
-        function drawMatrix() {
-            ctx.fillStyle = 'rgba(0,0,0,0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#0f0';
-            ctx.font = '16px monospace';
-            drops.forEach((y, i) => {
-                const x = i * 20;
-                ctx.fillText(chars[Math.floor(Math.random()*chars.length)], x, y);
-                y > canvas.height || Math.random() > 0.95 ? drops[i] = 0 : drops[i] = y + 20;
-            });
-            requestAnimationFrame(drawMatrix);
-        }
-        drawMatrix();
     </script>
 </body>
 </html>
